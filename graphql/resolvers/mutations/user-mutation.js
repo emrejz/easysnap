@@ -4,7 +4,7 @@ module.exports={
           username
         })
         if(user){
-            throw new Error("hebele hübele")
+            throw new Error("username must be unique")
         }
         return await new UserSchema({
             username,password

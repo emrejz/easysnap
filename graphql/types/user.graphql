@@ -1,7 +1,9 @@
 type Query{
-    user:User!
+    user(id:ID!):User!
+    users:[User!]!
 }
 type User{
+    id:String
     username:String!
     createdAt:String
 }
