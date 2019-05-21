@@ -1,9 +1,12 @@
 type Snap{
+    id:ID!
     createdAt:String!
     text:String!
+    user:User!
 }
 type Query{
     snap(id:ID!):Snap!
+    snaps:[Snap!]!
 }
 type Mutation{
     addSnap(data:snapInp):Snap!

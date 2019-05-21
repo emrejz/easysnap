@@ -6,9 +6,12 @@ type User{
     id:ID
     username:String!
     createdAt:String
+    snaps:[Snap!]!
 }
 type Mutation{
-    addUser(data:userInp):User!
+    addUser(data:userInp!):Token!
+    signIn(data:userInp!):Token!
+
 }
 input userInp {
     username:String!

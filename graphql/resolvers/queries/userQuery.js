@@ -1,4 +1,4 @@
-const Query={
+const userQuery={
     user:async (parent,args,{UserSchema})=>{
         return await UserSchema.findById(args.id)
         
@@ -6,5 +6,6 @@ const Query={
     users:(parent,args,{UserSchema})=>{
         return UserSchema.find({}).sort({"createdAt":1})
     }
+    
 }
-module.exports=Query
+module.exports=userQuery
