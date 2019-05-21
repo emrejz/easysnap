@@ -3,7 +3,7 @@ type Query{
     users:[User!]!
 }
 type User{
-    id:String
+    id:ID
     username:String!
     createdAt:String
 }

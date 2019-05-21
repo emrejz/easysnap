@@ -5,12 +5,14 @@ const resolvers=require("./graphql/resolvers/index")
 const db=require("./helpers/db")
 //models 
 const UserSchema=require("./models/UserSchema")
+const SnapSchema=require("./models/SnapSchema")
 require("dotenv").config()
 const server=new ApolloServer({
     typeDefs:importSchema("./graphql/schema-types.graphql"),
     resolvers,
     context:{
-        UserSchema
+        UserSchema,
+        SnapSchema
     }
     
 })

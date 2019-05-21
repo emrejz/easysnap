@@ -19,11 +19,11 @@ const UserSchema=new Schema({
 })
 UserSchema.pre("save",function(next){
     if(!this.isModified()){
-        next()
+        return next()
     }else{
         bcrypt.hash(this.password, 8,(err, hash)=>{
             this.password=hash;
-            next()
+            return next()
         });
     }
 })
