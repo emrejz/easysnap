@@ -7,7 +7,7 @@ const sessionWrapperHOC=Component=>props=>(
         {
             ({data,loading,error,refetch})=>{
                 if(loading) return <div style={{textAlign:"center"}}>Loading..</div>
-              console.log(data)
+          
                 return <Component {...props} refetch={refetch} session={data}/>
             }
         }

@@ -17,6 +17,7 @@ mutation($username:String!, $password:String!) {
 export const getActiveUser=gql`
 query{
     activeUser{
+        id
         username
         createdAt
         snaps{
@@ -25,3 +26,24 @@ query{
         }
     }
 }`
+
+export const getSnaps=gql`
+query {
+  snaps {
+    id
+    createdAt
+    text
+    user {
+      id
+      username
+    }
+  }
+}
+`
+export const addSnap=gql`
+mutation($text:String!,$userID:ID!){
+  addSnap(data:{text:$text,userID:$userID}){
+    id
+  }
+}
+`

@@ -1,6 +1,36 @@
 import React, { Component } from 'react'
+import SnapList from '../SnapList'
+import {Mutation} from 'react-apollo'
+import {addSnap,getSnaps} from '../queries/index'
+
 
 export default class Home extends Component {
+    state={
+        text:"",
+        userID:""
+    }
+    onChng=(e)=>{
+        this.setState({
+            [e.target.name]:e.target.value
+        })
+    }
+    componentDidMount() {     
+       if(this.props.session.activeUser){
+           this.setState({
+            userID:this.props.session.activeUser.id
+           })
+       }
+    }
+    onSbmt=(e,addSnap)=>{
+        e.preventDefault();
+        if(this.state.text){
+        addSnap().then(({data})=>{
+            this.setState({
+                text: ""
+            });
+        })}
+    }
+
     render() {
         return (
             <div>
@@ -8,34 +38,29 @@ export default class Home extends Component {
                     <p className="sub_header__desc">simple snap app with <span>react</span>.</p>
                 </div>
                 <div>
-                    <form>
-                        <input className="add-snap__input" type="text" placeholder="add snap" />
-                    </form>
+                    <Mutation 
+                      mutation={addSnap} 
+                      refetchQueries={[{ query: getSnaps }]}
+                      variables={{...this.state}}>
+                        {(addSnap,{loading,error})=>(
+                            <form onSubmit={(e)=>{
+                                this.onSbmt(e,addSnap)
+                            }}>
+                            <input 
+                             name="text"
+                             value={this.state.text}
+                             onChange={this.onChng}
+                             disabled={!this.props.session.activeUser || loading}
+                             className="add-snap__input"
+                             type="text"
+                             placeholder="add snap" />
+                        </form>
+                        )}
+                    </Mutation>
                 </div>
-                <div>
-                    <ul className="snaps">
-                        <li>
-                            <div className="title">Lorem ipsum dolor sit amet</div>
-                            <div className="date">
-                                <span>now</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="title">Curabitur gravida arcu ac tortor dignissim.</div>
-                            <div className="date">
-                                <span>5 minutes ago</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="title">Tristique risus nec feugiat in fermentum.</div>
-                            <div className="date">
-                                <span>7 minutes ago</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div className="counter">3 snap(s)</div>
+                <SnapList/>
             </div>
         )
     }
 }
+
