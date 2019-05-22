@@ -1,10 +1,12 @@
 const userQuery={
     user:async (parent,args,{UserSchema})=>{
-        return await UserSchema.findById(args.id)
-        
+        return await UserSchema.findById(args.id)    
     },
-    users:(parent,args,{UserSchema})=>{
-        return UserSchema.find({}).sort({"createdAt":1})
+    users:async(parent,args,{UserSchema})=>{
+        return await UserSchema.find({}).sort({"createdAt":1})
+    },
+    activeUser:async (parent,args,{UserSchema,activeUser})=>{
+        return await  UserSchema.findOne({username:activeUser.username})
     }
     
 }

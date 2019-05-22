@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Join from './pages/Join';
 import Login from './pages/Login';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import sessionWrapperHOC from './sessionWrapperHOC';
 
 const Root = () => {
   return(
@@ -19,13 +20,13 @@ const Root = () => {
     </div>
   </BrowserRouter>)
 }
-
+const RootWithSession=sessionWrapperHOC(Root)
 function App() {
   return (
     <div id="app">
       <div className="container">
     
-        <Root />
+        <RootWithSession />
       </div>
     </div>
 

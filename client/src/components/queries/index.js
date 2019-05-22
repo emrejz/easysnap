@@ -14,3 +14,15 @@ mutation($username:String!, $password:String!) {
     }
 }
 `;
+export const getActiveUser=gql`
+query{
+    activeUser{
+        username,
+        createdAt,
+        snaps{
+            text,
+            createdAt,
+            
+        }
+    }
+}`

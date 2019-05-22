@@ -12,10 +12,11 @@ require("dotenv").config()
 const server=new ApolloServer({
     typeDefs:importSchema("./graphql/schema-types.graphql"),
     resolvers,
-    context:{
+    context:({req})=>({
         UserSchema,
-        SnapSchema
-    }
+        SnapSchema,
+        activeUser:req.activeUser
+    })
     
 })
 db();
@@ -26,7 +27,7 @@ app.use(async(req,res,next)=>{
     if(token && token!=="null"){
         try {
             const activeUser=await verifyTokem(token)
-        
+            req.activeUser=activeUser
         } catch (error) {
             console.log(error)
         }
