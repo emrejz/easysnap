@@ -1,6 +1,7 @@
+scalar Date
 type Snap{
     id:ID!
-    createdAt:String!
+    createdAt:Date!
     text:String!
     user:User!
 }
