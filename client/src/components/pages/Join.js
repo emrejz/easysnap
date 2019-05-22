@@ -1,7 +1,6 @@
 import React from 'react'
 import {Mutation} from 'react-apollo'
 import {addUser} from '../queries/index'
-import Error from '../Error'
 import { withRouter } from 'react-router-dom'
 
 const initialState={
@@ -21,9 +20,10 @@ const initialState={
     
     onSbmt = (e, func) => {
 		e.preventDefault();
-		func().then(({data}) =>{
+		func().then(async ({data}) =>{
             this.props.history.push("/")
             localStorage.setItem("token",data.addUser.token)
+            this.props.refetch();
             this.setState({
                 ...initialState
             })
@@ -59,7 +59,7 @@ const initialState={
                 </label> 
                 
                 {loading && <div>Loading..</div>}
-                {error && <Error error={error.message}/>}
+                {error && <div error={error.message}/>}
             </form>
             )
           }

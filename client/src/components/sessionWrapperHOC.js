@@ -5,10 +5,10 @@ import {getActiveUser} from './queries/index'
 const sessionWrapperHOC=Component=>props=>(
     <Query query={getActiveUser}>
         {
-            ({data,loading,error})=>{
+            ({data,loading,error,refetch})=>{
                 if(loading) return <div style={{textAlign:"center"}}>Loading..</div>
               console.log(data)
-                return <Component {...props}/>
+                return <Component {...props} refetch={refetch}/>
             }
         }
     </Query>

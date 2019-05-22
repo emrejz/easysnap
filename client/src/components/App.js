@@ -6,15 +6,15 @@ import Login from './pages/Login';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import sessionWrapperHOC from './sessionWrapperHOC';
 
-const Root = () => {
+const Root = ({refetch}) => {
   return(
   <BrowserRouter>
     <div> 
       <Header />
       <Switch>
         <Route path="/" exact component={Home} />
-        <Route path="/login" component={Login} />
-        <Route path="/join" component={Join} />
+        <Route path="/login" render={()=><Login refetch={refetch}/>} />
+        <Route path="/join" render={()=><Join refetch={refetch}/>}/> 
         <Redirect to="/" />
       </Switch>
     </div>

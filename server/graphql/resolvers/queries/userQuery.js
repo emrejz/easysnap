@@ -9,9 +9,9 @@ const userQuery={
       
         try {
             if(typeof activeUser!==undefined)
-            return await  UserSchema.findOne({username:activeUser.username})
+             return await  UserSchema.findOne({username:activeUser.username})
             else
-            return null
+              return null
         } catch (error) {
             return null
         }

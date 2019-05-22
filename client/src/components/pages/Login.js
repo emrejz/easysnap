@@ -16,7 +16,10 @@ const initialState = {
         this.setState({
             ...initialState
         });
-        func().then(data=>{console.log(data); this.props.history.push("/")})
+        func().then( async ({data})=>{
+            localStorage.setItem("token",data.signIn.token);
+            await this.props.refetch();
+            this.props.history.push("/")})
 
     }
     onChng = (e) => {
