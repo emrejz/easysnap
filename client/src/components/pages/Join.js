@@ -20,7 +20,9 @@ export default class Join extends React.Component {
     
     onSbmt = (e, func) => {
 		e.preventDefault();
-		func().then(data =>{
+		func().then(({data}) =>{
+            console.log(data)
+            localStorage.setItem("token",data.addUser.token)
             this.setState({
                 ...initialState
             })

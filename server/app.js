@@ -1,4 +1,5 @@
 const express=require("express")
+const cors = require('cors')
 const {ApolloServer}=require("apollo-server-express")
 const {importSchema}=require("graphql-import")
 const resolvers=require("./graphql/resolvers/index")
@@ -18,6 +19,7 @@ const server=new ApolloServer({
 })
 db();
 const app=express();
+app.use(cors())
 server.applyMiddleware({app})
 app.listen({port:4000},()=>{
     console.log("apollo server ok")
