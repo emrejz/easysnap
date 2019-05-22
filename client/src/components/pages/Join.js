@@ -22,7 +22,7 @@ export default class Join extends React.Component {
 		e.preventDefault();
 		func().then(({data}) =>{
             console.log(data)
-            localStorage.setItem("token",data.addUser.token)
+            localStorage.setItem("token",data.addUser.token)s
             this.setState({
                 ...initialState
             })
