@@ -2,13 +2,14 @@ import React from 'react'
 import {Mutation} from 'react-apollo'
 import {addUser} from '../queries/index'
 import Error from '../Error'
+import { withRouter } from 'react-router-dom'
 
 const initialState={
     username:"",
     password:"",
     cPassword:""  
 }
-export default class Join extends React.Component {
+ class Join extends React.Component {
     state={
       ...initialState
     }
@@ -21,6 +22,7 @@ export default class Join extends React.Component {
     onSbmt = (e, func) => {
 		e.preventDefault();
 		func().then(({data}) =>{
+            this.props.history.push("/")
             localStorage.setItem("token",data.addUser.token)
             this.setState({
                 ...initialState
@@ -67,3 +69,4 @@ export default class Join extends React.Component {
     }
 }
 
+export default withRouter(Join)

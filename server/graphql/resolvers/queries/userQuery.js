@@ -6,7 +6,17 @@ const userQuery={
         return await UserSchema.find({}).sort({"createdAt":1})
     },
     activeUser:async (parent,args,{UserSchema,activeUser})=>{
-        return await  UserSchema.findOne({username:activeUser.username})
+      
+        try {
+            if(typeof activeUser!==undefined)
+            return await  UserSchema.findOne({username:activeUser.username})
+            else
+            return null
+        } catch (error) {
+            return null
+        }
+          
+       
     }
     
 }

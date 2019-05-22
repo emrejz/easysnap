@@ -17,12 +17,11 @@ mutation($username:String!, $password:String!) {
 export const getActiveUser=gql`
 query{
     activeUser{
-        username,
-        createdAt,
+        username
+        createdAt
         snaps{
-            text,
-            createdAt,
-            
+            text
+            createdAt
         }
     }
 }`
