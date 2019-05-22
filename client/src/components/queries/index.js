@@ -7,3 +7,10 @@ mutation($username:String!, $password:String!) {
     }
 }
 `;
+export const signIn= gql`
+mutation($username:String!, $password:String!) {
+    signIn(data:{username:$username,password:$password }) {
+        token
+    }
+}
+`;

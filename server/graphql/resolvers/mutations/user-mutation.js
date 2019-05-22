@@ -1,5 +1,5 @@
 const bcryptjs = require("bcryptjs")
-const generateToken = require("../../../helpers/jwt")
+const generateToken = require("../../../helpers/jwt").generateToken
 
 module.exports = {
     addUser: async (parent, { data: { username, password } }, { UserSchema }) => {

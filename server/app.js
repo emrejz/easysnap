@@ -4,6 +4,7 @@ const {ApolloServer}=require("apollo-server-express")
 const {importSchema}=require("graphql-import")
 const resolvers=require("./graphql/resolvers/index")
 const db=require("./helpers/db")
+const verifyTokem=require("./helpers/jwt").verifyToken
 //models 
 const UserSchema=require("./models/UserSchema")
 const SnapSchema=require("./models/SnapSchema")
@@ -20,6 +21,20 @@ const server=new ApolloServer({
 db();
 const app=express();
 app.use(cors())
+app.use(async(req,res,next)=>{
+    const token=req.headers["authorization"]
+    if(token && token!=="null"){
+        try {
+            const activeUser=await verifyTokem(token)
+        
+        } catch (error) {
+            console.log(error)
+        }
+        
+    }
+    next()
+})
+
 server.applyMiddleware({app})
 app.listen({port:4000},()=>{
     console.log("apollo server ok")
