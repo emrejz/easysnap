@@ -43,7 +43,7 @@ query {
 export const addSnap=gql`
 mutation($text:String!,$userID:ID!){
   addSnap(data:{text:$text,userID:$userID}){
-    id
+    id,createdAt,text,user{username,id}
   }
 }
 `

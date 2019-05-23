@@ -10,6 +10,7 @@ export default class Home extends Component {
         userID:""
     }
     onChng=(e)=>{
+
         this.setState({
             [e.target.name]:e.target.value
         })
@@ -22,7 +23,7 @@ export default class Home extends Component {
        }
     }
     onSbmt=(e,addSnap)=>{
-        e.preventDefault();
+        e.preventDefault(); 
         if(this.state.text){
         addSnap().then(({data})=>{
             this.setState({
@@ -30,8 +31,19 @@ export default class Home extends Component {
             });
         })}
     }
-
+    updateCache=(cache,{data:addSnap})=>{
+      const {snaps}=cache.readQuery({
+          query:getSnaps
+      })
+      cache.writeQuery({
+        query:getSnaps,
+        data:{ 
+            snaps:[addSnap.addSnap,...snaps]
+        }
+      })
+    }
     render() {
+        const {session}=this.props
         return (
             <div>
                 <div className="description">
@@ -40,13 +52,28 @@ export default class Home extends Component {
                 <div>
                     <Mutation 
                       mutation={addSnap} 
-                      refetchQueries={[{ query: getSnaps }]}
+                     // refetchQueries={[{ query: getSnaps }]}
+                     update={this.updateCache}
+                     optimisticResponse={{
+                        __typename:"Mutation",
+                        addSnap:{
+                             __typename:"Snap",
+                            id:-Math.round(Math.random()*99999),
+                            text:this.state.text,
+                            createdAt:new Date(),
+                            user:{
+                                __typename:"User",
+                                ...session.activeUser
+                            }
+                         }
+                         }}
                       variables={{...this.state}}>
                         {(addSnap,{loading,error})=>(
                             <form onSubmit={(e)=>{
                                 this.onSbmt(e,addSnap)
                             }}>
-                            <input 
+                            <input
+                             id="text" 
                              name="text"
                              value={this.state.text}
                              onChange={this.onChng}

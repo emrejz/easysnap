@@ -18,7 +18,7 @@ export default class SnapList extends Component {
                         return <div>
                             <ul className="snaps">
                                 {data.snaps.map(snap =>
-                                    <li key={snap.id} >
+                                    <li key={snap.id} className={snap.id<0 ? "optimistic" : ""} >
                                         <div className="title">
                                             <span>@{snap.user.username} </span>{snap.text}
                                         </div>
