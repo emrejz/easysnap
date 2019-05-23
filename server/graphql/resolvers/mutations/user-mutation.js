@@ -2,17 +2,18 @@ const bcryptjs = require("bcryptjs")
 const generateToken = require("../../../helpers/jwt").generateToken
 
 module.exports = {
-    addUser: async (parent, { data: { username, password } }, { UserSchema }) => {
+    addUser: async (parent, { data: { username, password } }, { UserSchema,pubSub }) => {
         const user = await UserSchema.findOne({
             username
         })
         if (user) {
             throw new Error("username must be unique")
         }
-        const newUSer=await new UserSchema({
+        const newUser=await new UserSchema({
             username, password
         }).save()
-        return{token:generateToken(newUSer)}
+        pubSub.publish("newUser",{user:newUser})
+        return{token:generateToken(newUser)}
 
     },
     signIn: async (parent, { data: { username, password } }, { UserSchema }) => {

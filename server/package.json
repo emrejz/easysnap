@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/emrejz/easysnap#readme",
   "dependencies": {
+    "apollo-server": "^2.5.0",
     "apollo-server-express": "^2.5.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",

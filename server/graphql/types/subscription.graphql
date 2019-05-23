@@ -1,0 +1,6 @@
+type Subscription{
+    snap(userID:ID):Snap!
+}
+type Subscription{
+    user:User!
+}
