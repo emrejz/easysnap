@@ -25,10 +25,10 @@ export default class Home extends Component {
     onSbmt=(e,addSnap)=>{
         e.preventDefault(); 
         if(this.state.text){
-        addSnap().then(({data})=>{
             this.setState({
                 text: ""
             });
+        addSnap().then(({data})=>{
         })}
     }
     updateCache=(cache,{data:addSnap})=>{
@@ -41,9 +41,23 @@ export default class Home extends Component {
             snaps:[addSnap.addSnap,...snaps]
         }
       })
-    }
+    };
     render() {
-        const {session}=this.props
+        const {session}=this.props;
+        const optimisticRes={
+            __typename:"Mutation",
+             addSnap:{
+             __typename:"Snap",
+            id:-Math.round(Math.random()*99999),
+            text:this.state.text,
+            createdAt:new Date(),
+            user:{
+                __typename:"User",
+                ...session.activeUser
+            }
+         }
+         };
+        
         return (
             <div>
                 <div className="description">
@@ -54,19 +68,7 @@ export default class Home extends Component {
                       mutation={addSnap} 
                      // refetchQueries={[{ query: getSnaps }]}
                      update={this.updateCache}
-                     optimisticResponse={{
-                        __typename:"Mutation",
-                        addSnap:{
-                             __typename:"Snap",
-                            id:-Math.round(Math.random()*99999),
-                            text:this.state.text,
-                            createdAt:new Date(),
-                            user:{
-                                __typename:"User",
-                                ...session.activeUser
-                            }
-                         }
-                         }}
+                     optimisticResponse={optimisticRes}
                       variables={{...this.state}}>
                         {(addSnap,{loading,error})=>(
                             <form onSubmit={(e)=>{
@@ -77,7 +79,7 @@ export default class Home extends Component {
                              name="text"
                              value={this.state.text}
                              onChange={this.onChng}
-                             disabled={!this.props.session.activeUser || loading}
+                             disabled={!this.props.session.activeUser}
                              className="add-snap__input"
                              type="text"
                              placeholder="add snap" />

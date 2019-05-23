@@ -23,7 +23,8 @@ export default class SnapList extends Component {
                                             <span>@{snap.user.username} </span>{snap.text}
                                         </div>
                                         <div className="date">
-                                            <TimeAgo  date={snap.createdAt} />
+                                            {snap.id<0 ? <span>Sending..</span> :
+                                            <TimeAgo  date={snap.createdAt} />}
                                         </div>
                                     </li>)}
                             </ul>
