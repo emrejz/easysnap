@@ -1,6 +1,6 @@
 import React from 'react'
 import {Query} from 'react-apollo'
-import {getActiveUser} from './queries/index'
+import {getActiveUser} from '../queries'
 
 const sessionWrapperHOC=Component=>props=>(
     <Query query={getActiveUser}>

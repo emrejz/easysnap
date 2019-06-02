@@ -2,7 +2,10 @@ body{
   font-family: "Roboto Mono", monospace;
   word-spacing: -3px;
 }
-
+.subJoin{
+  text-align: center;
+  padding-top: 5px
+}
 ul{
   margin: 0;
   padding: 0;

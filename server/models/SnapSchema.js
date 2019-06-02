@@ -15,5 +15,5 @@ const SnapSchema=new Schema({
     }
 })
 
-
+mongoose.Promise=global.Promise
 module.exports=mongoose.model("snap",SnapSchema)

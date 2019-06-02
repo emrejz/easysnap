@@ -1,6 +1,6 @@
 import React from 'react'
 import {Mutation} from 'react-apollo'
-import {addUser} from '../queries/index'
+import {addUser} from '../../queries/index'
 import { withRouter } from 'react-router-dom'
 
 const initialState={
@@ -19,14 +19,18 @@ const initialState={
     }
     
     onSbmt = (e, func) => {
-		e.preventDefault();
+        e.preventDefault();
+        this.setState({
+            ...initialState
+        })
 		func().then(async ({data}) =>{
-            this.props.history.push("/")
+           try {
             localStorage.setItem("token",data.addUser.token)
-            this.props.refetch();
-            this.setState({
-                ...initialState
-            })
+            await this.props.refetch(); 
+            this.props.history.push("/")
+           } catch (error) {
+              throw new Error(error) 
+           }
         })
     };
     formValid=()=>{

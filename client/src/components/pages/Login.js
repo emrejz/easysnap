@@ -1,5 +1,5 @@
 import React from 'react'
-import { signIn } from '../queries/index'
+import { signIn } from '../../queries/index'
 import { Mutation } from 'react-apollo'
 import { withRouter } from 'react-router-dom'
 
@@ -17,9 +17,13 @@ const initialState = {
             ...initialState
         });
         func().then( async ({data})=>{
+          try {
             localStorage.setItem("token",data.signIn.token);
             await this.props.refetch();
-            this.props.history.push("/")})
+            this.props.history.push("/")
+          } catch (error) {
+              throw new Error(error)
+          }})
 
     }
     onChng = (e) => {

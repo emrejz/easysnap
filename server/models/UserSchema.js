@@ -14,18 +14,22 @@ const UserSchema=new Schema({
     },
     createdAt:{
         type:Date,
-        default:Date.now()
+        default:Date.now
     }
 })
 UserSchema.pre("save",function(next){
-    if(!this.isModified()){
-        return next()
-    }else{
-        bcrypt.hash(this.password, 8,(err, hash)=>{
-            this.password=hash;
+    try {
+        if(!this.isModified()){
             return next()
-        });
+        }else{
+            bcrypt.hash(this.password, 8,(err, hash)=>{
+                this.password=hash;
+                return next()
+            });
+        }
+    } catch (error) {
+        throw new Error(error)
     }
 })
-
+mongoose.Promise=global.Promise
 module.exports=mongoose.model("user",UserSchema)

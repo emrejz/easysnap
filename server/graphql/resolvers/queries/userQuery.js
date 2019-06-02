@@ -1,19 +1,30 @@
 const userQuery={
     user:async (parent,args,{UserSchema})=>{
-        return await UserSchema.findById(args.id)    
+        try {
+           return await UserSchema.findById(args.id)    
+        } catch (error) {
+            throw new Error(error)
+        }
+         
     },
     users:async(parent,args,{UserSchema})=>{
-        return await UserSchema.find({}).sort({"createdAt":1})
+        try {
+            return await UserSchema.find({})
+        } catch (error) {
+            throw new Error(error)
+        }
+       
     },
     activeUser:async (parent,args,{UserSchema,activeUser})=>{
       
-        try {
-            if(typeof activeUser!==undefined)
-             return await  UserSchema.findOne({username:activeUser.username})
-            else
-              return null
+        try {   
+                if(!activeUser)
+                    return null
+                else
+                return await  UserSchema.findOne({username:activeUser.username})
+           
         } catch (error) {
-            return null
+            throw new Error(error)
         }
           
        

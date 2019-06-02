@@ -3,7 +3,7 @@ module.exports={
   snap:{
     subscribe:withFilter((parent,args,{pubSub})=>pubSub.asyncIterator("newSnap"),
   
-     (payload,variables)=>variables.userID ? String(payload.snap.userID)===variables.userID : true
+     (payload,variables)=>variables.userID ? String(payload.snap.userID)!==variables.userID : true
      
   )}
 }

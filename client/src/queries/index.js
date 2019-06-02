@@ -21,6 +21,7 @@ query{
         username
         createdAt
         snaps{
+            id
             text
             createdAt
         }
@@ -44,6 +45,28 @@ export const addSnap=gql`
 mutation($text:String!,$userID:ID!){
   addSnap(data:{text:$text,userID:$userID}){
     id,createdAt,text,user{username,id}
+  }
+}
+`
+//subscription
+export const newUserSubs=gql`
+subscription {
+  user {
+    id
+    username
+  }
+}
+`
+export const newSnapSubs=gql`
+subscription($userID:ID) {
+  snap(userID:$userID) {
+    id
+    text,
+    createdAt
+    user{
+      username
+      id
+    }
   }
 }
 `

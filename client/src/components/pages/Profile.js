@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Moment from 'react-moment';
+import TimeAgo from 'react-timeago'
 import autHOC from '../autHOC';
 
  class Profile extends Component {
@@ -9,11 +9,11 @@ import autHOC from '../autHOC';
 
         return (
             <div>
-                <h3>Profile</h3>
-                <Moment>{activeUser.createdAt}</Moment>
+                <h2>Profile of <b style={{"color":"orange"}}>{activeUser.username}</b></h2>
+                <h5>Account created at <TimeAgo date={activeUser.createdAt}/></h5>
                 <br/>
                 <br/>
-                <div><b>@{activeUser.username}</b></div>
+            
             </div>
         )
     }

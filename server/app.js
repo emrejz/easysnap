@@ -10,7 +10,9 @@ const verifyToken=require("./helpers/jwt").verifyToken
 const UserSchema=require("./models/UserSchema")
 const SnapSchema=require("./models/SnapSchema")
 require("dotenv").config()
-
+db();
+const app=express();
+app.use(cors())
 const pubSub=new PubSub();
 const server=new ApolloServer({
     typeDefs:importSchema("./graphql/schema-types.graphql"),
@@ -23,23 +25,22 @@ const server=new ApolloServer({
     })
     
 })
-db();
-const app=express();
-app.use(cors())
+
 app.use(async(req,res,next)=>{
-    const token=req.headers["authorization"]
-    if(token && token!=="null"){
-        try {
-            const activeUser=await verifyToken(token)
+        try {  
+            const token=req.headers["authorization"]    
+            if(token && token!=="null" && token!==undefined){
+                const activeUser=await verifyToken(token)
                 req.activeUser=activeUser
            
-        } catch (error) {
-            console.log(error)
+        }} catch (error) {
+            next()
+            throw new Error(error)
         }
         
-    }
-    next()
-})
+    
+    next()})
+
 
 server.applyMiddleware({app})
 const httpServer = http.createServer(app);
